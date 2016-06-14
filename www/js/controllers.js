@@ -196,7 +196,7 @@ angular.module('starter.controllers', ['ngStorage'])
     /* RECETTES CONTROLLER */
     /*-------------------------------------------------------------------------------------------------------------------------------*/
 
-    .controller('RecettesController', function($scope, $state, $window, $http, $sessionStorage, $ionicHistory){
+    .controller('RecettesController', function($scope, $state, $window, $http, $sessionStorage, $ionicHistory, $ionicPopup){
 
         if (!angular.isDefined($sessionStorage.currentUser)) {
             $state.go('app.login');
@@ -231,6 +231,52 @@ angular.module('starter.controllers', ['ngStorage'])
             }
         };
         $scope.findRecettes();
+
+        $scope.showNewRecette = function() {
+            $ionicPopup.show({
+                template:
+                '<input type="text" placeholder="Nom de la recette" ng-model="recetteData.recette_name">' +
+                '<br>' +
+                '<textarea placeholder="Contenu de la recette" ng-model="recetteData.recette_content"></textarea>',
+                title: 'Ajouter une recette',
+                scope: $scope,
+                buttons: [
+                    { text: 'Annuler' },
+                    {
+                        text: '<b>Ajouter</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if ($scope.recetteData.recette_name && $scope.recetteData.recette_content) {
+                                $http.post($scope.apilink+"Recette/RecetteController.php", {
+                                        type : 'recette',
+                                        action : 'add',
+                                        recette: {
+                                            recette_name: $scope.recetteData.recette_name,
+                                            recette_content: $scope.recetteData.recette_content
+                                        }
+                                    })
+                                    .then(function (res) {
+                                            $scope.recetteData.recette_content = "";
+                                            $scope.recetteData.recette_name = "";
+                                            $scope.findRecettes();
+                                            //$state.go($state.current, {}, {reload: true});
+                                        },
+                                        function(error){
+                                            console.warn('ERROR NEW LIST');
+                                            console.log(error);
+                                        }
+                                    );
+
+                            }
+                            else {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                            }
+                        }
+                    }
+                ]
+            });
+        };
     })
 
 
@@ -252,9 +298,10 @@ angular.module('starter.controllers', ['ngStorage'])
                     .then(function (res){
                             var response = res.data;
                             $scope.recette = response['recette'];
+                            console.log(res);
                         },
                         function(error){
-                            console.warn('ERROR FIND LIST');
+                            console.warn('ERROR FIND RECETTE');
                             console.log(error);
                         }
                     );
