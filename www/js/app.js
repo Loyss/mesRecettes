@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 }
             })
             .state('app.recette', {
-                url: '/recettes/:recette_id',
+                url: '/recettes/:recetteId',
                 views: {
                     'menuContent' : {
                         templateUrl: 'templates/recette.html',

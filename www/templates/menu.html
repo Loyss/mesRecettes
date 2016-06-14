@@ -1,39 +1,44 @@
 <ion-side-menus enable-menu-with-back-views="false">
-    <ion-side-menu-content>
-        <ion-nav-bar class="bar-assertive fond">
-            <ion-nav-back-button class="texte-blanc">
-            </ion-nav-back-button>
 
+    <ion-side-menu-content>
+
+        <ion-nav-bar class="bar-assertive fond">
+            <ion-nav-back-button class="texte-blanc"></ion-nav-back-button>
             <ion-nav-buttons class="texte-blanc" side="left">
-                <button class="button button-icon button-clear ion-navicon texte-blanc" menu-toggle="left">
-                </button>
+                <button class="button button-icon button-clear ion-navicon texte-blanc" menu-toggle="left"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
+
         <ion-nav-view class="texte-blanc" name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
 
     <ion-side-menu side="left">
+
         <ion-header-bar class="bar-stable">
             <div ng-switch="logged">
                 <h1 ng-switch-when="true" class="title ">Salut {{ currentUser.user_pseudo }} !</h1>
-                <h1 ng-switch-when="false" class="title">Oh My Coach</h1>
+                <h1 ng-switch-when="false" class="title">HOSS</h1>
             </div>
         </ion-header-bar>
+
         <ion-content>
+
             <ion-list>
                 <ion-item ng-show="logged == false" menu-close href="#/app/login">
                     <h2><i class="ion-log-in"></i> Connexion</h2>
                 </ion-item>
                 <ion-item ng-show="logged == true" menu-close href="#/app/recettes">
-                    <h2><i class="ion-person"></i> Recettes</h2>
+                    <h2><i class="ion-fork"></i> Recettes</h2>
                 </ion-item>
                 <ion-item ng-show="logged == true" menu-close href="#/app/profil">
                     <h2><i class="ion-person"></i> Profil</h2>
                 </ion-item>
                 <ion-item ng-show="logged == true" menu-close ng-click="logout()">
-                    <h2><i class="ion-log-out"></i> Déconnexion</h2>
+                    <h2><i class="ion-power"></i> Déconnexion</h2>
                 </ion-item>
             </ion-list>
+
         </ion-content>
     </ion-side-menu>
+
 </ion-side-menus>

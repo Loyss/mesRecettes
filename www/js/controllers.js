@@ -196,7 +196,15 @@ angular.module('starter.controllers', ['ngStorage'])
     /* RECETTES CONTROLLER */
     /*-------------------------------------------------------------------------------------------------------------------------------*/
 
-    .controller('RecettesController', function($scope, $state, $window, $http){
+    .controller('RecettesController', function($scope, $state, $window, $http, $sessionStorage, $ionicHistory){
+
+        if (!angular.isDefined($sessionStorage.currentUser)) {
+            $state.go('app.login');
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+        }
+
         $scope.findRecettes = function() {
             if ($scope.logged == true) {
                 $http.post($scope.apilink+"Recette/RecetteController.php", {
@@ -230,21 +238,14 @@ angular.module('starter.controllers', ['ngStorage'])
     /* RECETTE CONTROLLER */
     /*-------------------------------------------------------------------------------------------------------------------------------*/
 
-    .controller('RecetteController', function($scope, $state, $window, $http, $stateParams, $sessionStorage, $ionicHistory){
-
-        if (!angular.isDefined($sessionStorage.currentUser)) {
-            $state.go('app.login');
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            });
-        }
+    .controller('RecetteController', function($scope, $state, $window, $http, $stateParams){
         $scope.findRecette = function() {
             if ($scope.logged == true) {
                 $http.post($scope.apilink+"Recette/RecetteController.php", {
                         type : 'recette',
-                        action : 'findRecette',
+                        action : 'find',
                         recette: {
-                            recette_id : $stateParams['recette_id']
+                            recette_id : $stateParams['recetteId']
                         }
                     })
 
