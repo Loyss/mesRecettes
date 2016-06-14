@@ -237,6 +237,8 @@ angular.module('starter.controllers', ['ngStorage'])
                 template:
                 '<input type="text" placeholder="Nom de la recette" ng-model="recetteData.recette_name">' +
                 '<br>' +
+                '<input type="text" placeholder="Temps de cuisson" ng-model="recetteData.recette_time">' +
+                '<br>' +
                 '<textarea placeholder="Contenu de la recette" ng-model="recetteData.recette_content"></textarea>',
                 title: 'Ajouter une recette',
                 scope: $scope,
@@ -246,17 +248,19 @@ angular.module('starter.controllers', ['ngStorage'])
                         text: '<b>Ajouter</b>',
                         type: 'button-positive',
                         onTap: function(e) {
-                            if ($scope.recetteData.recette_name && $scope.recetteData.recette_content) {
+                            if ($scope.recetteData.recette_name && $scope.recetteData.recette_time && $scope.recetteData.recette_content) {
                                 $http.post($scope.apilink+"Recette/RecetteController.php", {
                                         type : 'recette',
                                         action : 'add',
                                         recette: {
                                             recette_name: $scope.recetteData.recette_name,
+                                            recette_time: $scope.recetteData.recette_time,
                                             recette_content: $scope.recetteData.recette_content
                                         }
                                     })
                                     .then(function (res) {
                                             $scope.recetteData.recette_content = "";
+                                            $scope.recetteData.recette_time = "";
                                             $scope.recetteData.recette_name = "";
                                             $scope.findRecettes();
                                             //$state.go($state.current, {}, {reload: true});

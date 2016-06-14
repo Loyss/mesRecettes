@@ -1,7 +1,7 @@
 <ion-view cache-view="false">
 
     <ion-nav-title>
-        Nom{{ recette.recette_name }}
+        Nom{{recette.recette_name}}
     </ion-nav-title>
 
     <ion-content>
@@ -12,6 +12,7 @@
             </div>
             <div class="item item-body">
                 <img class="full-image" src="../img/cookie.png">
+                <p>temps de cuisson {{ recette.recette_time }}</p>
                 <p>contenu {{ recette.recette_content }}</p>
             </div>
         </div>
