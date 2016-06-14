@@ -1,0 +1,29 @@
+<ion-view view-title="Profil">
+    <ion-content>
+        <div class="padding">
+            <ion-list ng-switch="logged">
+                <h3 ng-switch-when="true" class="title  text-center">{{ currentUser.user_pseudo }} </h3>
+            </ion-list>
+        </div>
+        </ion-list>
+        <div class="padding">
+            <h4 class="">Modifier mon mot de passe</h4>
+        </div>
+        <form ng-submit="updateUser()">
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label ">Nouveau mot de passe</span>
+                    <input class="" type="password" placeholder="Nouveau mot de passe" ng-model="userData.user_password">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label ">Confirmation du nouveau mot depasse</span>
+                    <input class="" type="password" placeholder="Confirmation du nouveau mot de passe" ng-model="userData.user_password_confirm">
+                </label>
+                <div class="padding">
+                    <button class="button button-block button-positive boutton-radius bleu-fonce" type="submit">Enregistrer</button>
+                    <button class="button button-block button-assertive boutton-radius" type="button" ng-click="deleteUser()">Supprimer compte</button>
+                </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
