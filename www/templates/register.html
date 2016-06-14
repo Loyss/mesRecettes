@@ -1,0 +1,31 @@
+<ion-view class="fond" view-title="Inscription">
+    <ion-content>
+        <div class="logo text-center">
+            <img src="img/logo.png" alt="">
+        </div>
+        <div class="title">
+            <h3 class="text-center texte-blanc">Créer un compte</h3>
+        </div>
+        <ion-list>
+            <form ng-submit="register()">
+                <div class="list">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label texte-blanc">Pseudo</span>
+                        <input class="texte-blanc" type="text" placeholder="Pseudo" ng-model="userData.user_pseudo">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label texte-blanc">Email</span>
+                        <input class="texte-blanc" type="email" placeholder="Email" ng-model="userData.user_email">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label texte-blanc">Mot de passe</span>
+                        <input class="texte-blanc" type="password" placeholder="Mot de passe" ng-model="userData.user_password">
+                    </label>
+                    <div class="padding">
+                        <button class="button button-block button-positive bleu-fonce boutton-radius" type="submit">S'inscrire</button>
+                    </div>
+                </div>
+            </form>
+        </ion-list>
+    </ion-content>
+</ion-view>

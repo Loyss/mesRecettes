@@ -1,0 +1,27 @@
+<ion-view class="pane fond" view-title="Connexion">
+    <ion-content ng-show="logged == false">
+        <div class="logo text-center">
+            <img src="img/logo.png" alt="">
+        </div>
+        <div class="title">
+            <h3 class="text-center texte-blanc">Bonjour !</h3>
+        </div>
+        <form ng-submit="login()">
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label texte-blanc">Email</span>
+                    <input class="texte-blanc" type="text" ng-model="userData.user_email" placeholder="Email">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label texte-blanc">Password</span>
+                    <input class="texte-blanc" type="password" ng-model="userData.user_password"  placeholder="Password">
+                </label>
+                <div class="padding">
+                    <button class="button button-block button-positive bleu-fonce boutton-radius" type="submit">Connexion</button>
+                    <p class="text-center texte-blanc">or</p>
+                    <button class="button button-block button-balanced vert boutton-radius" type="button" ng-click="viewRegister()">S'inscrire</button>
+                </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
