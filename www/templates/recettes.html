@@ -1,27 +1,17 @@
 <ion-view view-title="Recettes">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-compose" menu-toggle="right" ng-click="showNewList(currentUser.user_id)">
+        </button>
+    </ion-nav-buttons>
     <ion-content>
-        <div class="list card">
-
-            <div class="item item-avatar">
-                <img src="mcfly.jpg">
-                <h2>Marty McFly</h2>
-                <p>November 05, 1955</p>
+        <ion-list>
+            <div class="list">
+                <div class="item item-avatar" ng-repeat="recette in recettes">
+                    <img src="../img/cookie.png" alt="">
+                    {{recette.titre}}
+                </div>
             </div>
-
-            <div class="item item-body">
-                <img class="full-image" src="delorean.jpg">
-                <p>
-                    This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-                    the content is from a card-body consisting of an image and paragraph text. The footer
-                    consists of tabs, icons aligned left, within the card-footer.
-                </p>
-                <p>
-                    <a href="#" class="subdued">1 Like</a>
-                    <a href="#" class="subdued">5 Comments</a>
-                </p>
-            </div>
-
-        </div>
+        </ion-list>
     </ion-content>
 </ion-view>
 

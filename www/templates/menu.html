@@ -24,8 +24,11 @@
                 <ion-item ng-show="logged == false" menu-close href="#/app/login">
                     <h2><i class="ion-log-in"></i> Connexion</h2>
                 </ion-item>
-                <ion-item ng-show="logged == true" menu-close href="#/app/profil">
+                <ion-item ng-show="logged == true" menu-close href="#/app/recettes">
                     <h2><i class="ion-person"></i> Recettes</h2>
+                </ion-item>
+                <ion-item ng-show="logged == true" menu-close href="#/app/profil">
+                    <h2><i class="ion-person"></i> Profil</h2>
                 </ion-item>
                 <ion-item ng-show="logged == true" menu-close ng-click="logout()">
                     <h2><i class="ion-log-out"></i> Déconnexion</h2>
