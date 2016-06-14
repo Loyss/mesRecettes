@@ -6,10 +6,10 @@
     <ion-content>
         <ion-list>
             <div class="list">
-                <div class="item item-avatar" ng-repeat="recette in recettes">
+                <ion-item class="item item-avatar" ng-repeat="recette in recettes" href="#/app/recettes/{{recette.recette_id}}">
                     <img src="../img/cookie.png" alt="">
                     {{recette.titre}}
-                </div>
+                </ion-item>
             </div>
         </ion-list>
     </ion-content>

@@ -14,7 +14,9 @@ angular.module('starter.controllers', ['ngStorage'])
         $scope.apilink = "http://eliesmakhlouf.com/API/";
         $scope.userData = {};
         $scope.users = [];
-        $scope.coaches = [];
+        $scope.recetteData = {};
+        $scope.recette = {};
+        $scope.recettes = {};
 
 
         $scope.doRefresh = function() {
@@ -41,6 +43,11 @@ angular.module('starter.controllers', ['ngStorage'])
         };
 
     })
+
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /* REGISTER CONTROLLER */
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+
     .controller('RegisterController', function($scope, $http, $state, $ionicPopup, $window){
 
         $scope.register = function() {
@@ -110,6 +117,9 @@ angular.module('starter.controllers', ['ngStorage'])
         }
     })
 
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /* LOGIN CONTROLLER */
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
 
     .controller('LoginController', function($scope, $http, $state, $sessionStorage, $window, $ionicPopup, $timeout){
 
@@ -182,6 +192,10 @@ angular.module('starter.controllers', ['ngStorage'])
     })
 
 
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /* RECETTES CONTROLLER */
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+
     .controller('RecettesController', function($scope, $state, $window, $http){
         $scope.findRecettes = function() {
             if ($scope.logged == true) {
@@ -211,67 +225,90 @@ angular.module('starter.controllers', ['ngStorage'])
         $scope.findRecettes();
     })
 
-        .controller('ProfilController', function($scope, $http, $state, $sessionStorage, $ionicPopup){
+
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /* RECETTE CONTROLLER */
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+
+    .controller('RecetteController', function($scope, $state, $window, $http, $stateParams, $sessionStorage, $ionicHistory){
+
+        if (!angular.isDefined($sessionStorage.currentUser)) {
+            $state.go('app.login');
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+        }
+        $scope.findRecette = function() {
+            if ($scope.logged == true) {
+                $http.post($scope.apilink+"Recette/RecetteController.php", {
+                        type : 'recette',
+                        action : 'findRecette',
+                        recette: {
+                            id : $stateParams['recette_id']
+                        }
+                    })
+
+                    .then(function (res){
+                            var response = res.data;
+                            $scope.recette = response['recette'];
+                        },
+                        function(error){
+                            console.warn('ERROR FIND LIST');
+                            console.log(error);
+                        }
+                    );
+            }
+        };
+        $scope.findRecettes();
+    })
+
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /* PROFIL CONTROLLER */
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+
+    .controller('ProfilController', function($scope, $http, $state, $sessionStorage, $ionicPopup){
 
 
+    $scope.updateUser = function (){
+        if($scope.userData.user_password && $scope.userData.user_password_confirm){
+            if ($scope.userData.user_password == $scope.userData.user_password_confirm) {
+                $scope.error = "";
 
+                $http.post($scope.apilink+"User/UserController.php",
+                    {
+                        type : 'user',
+                        action : 'update',
+                        user: {
+                            user_id : $sessionStorage.currentUser.user_id,
+                            user_password : $scope.userData.user_password
+                        }
+                    })
 
-        $scope.updateUser = function (){
-            if($scope.userData.user_password && $scope.userData.user_password_confirm){
-                if ($scope.userData.user_password == $scope.userData.user_password_confirm) {
-                    $scope.error = "";
-
-                    $http.post($scope.apilink+"User/UserController.php",
-                        {
-                            type : 'user',
-                            action : 'update',
-                            user: {
-                                user_id : $sessionStorage.currentUser.user_id,
-                                user_password : $scope.userData.user_password
-                            }
-                        })
-
-                        .then(function (res){
-                                var response = res.data;
-                                $ionicPopup.alert({
-                                    title: "Mot de passe modifié",
-                                    buttons: [
-                                        {
-                                            text: 'Ok',
-                                            type: 'button-positive',
-                                            onTap: function () {
-                                                $state.go($state.current, {}, {reload: true});
-                                                $scope.userData = {};
-                                            }
+                    .then(function (res){
+                            var response = res.data;
+                            $ionicPopup.alert({
+                                title: "Mot de passe modifié",
+                                buttons: [
+                                    {
+                                        text: 'Ok',
+                                        type: 'button-positive',
+                                        onTap: function () {
+                                            $state.go($state.current, {}, {reload: true});
+                                            $scope.userData = {};
                                         }
-                                    ]
-                                });
-                            },
-                            function(error){
-                                $scope.userData = {};
-                                console.log(error);
-                            }
-                        );
-                }
-                else {
-                    $ionicPopup.alert({
-                        title:"Password doesn't match",
-                        button:[
-                            {
-                                text: 'Ok',
-                                type: 'button-positive',
-                                onTap: function(){
-                                    $state.go($state.current);
-                                }
-                            }
-                        ]
-                    });
-                    $scope.userData.user_password_confirm = "";
-                }
+                                    }
+                                ]
+                            });
+                        },
+                        function(error){
+                            $scope.userData = {};
+                            console.log(error);
+                        }
+                    );
             }
             else {
                 $ionicPopup.alert({
-                    title:"Veuillez remplir tous les champs",
+                    title:"Password doesn't match",
                     button:[
                         {
                             text: 'Ok',
@@ -282,44 +319,60 @@ angular.module('starter.controllers', ['ngStorage'])
                         }
                     ]
                 });
+                $scope.userData.user_password_confirm = "";
             }
-        };
-
-        $scope.deleteUser = function () {
-            $ionicPopup.confirm({
-                title: 'Supprimer mon compte ?',
-                buttons: [
+        }
+        else {
+            $ionicPopup.alert({
+                title:"Veuillez remplir tous les champs",
+                button:[
                     {
-                        text: 'Non',
-                        onTap: function () {
-                            $state.go($state.current, {}, {reload: true});
-                        }
-                    },
-                    {
-                        text: 'Oui',
-                        type: 'button-assertive',
-                        onTap: function () {
-                            $http.post($scope.apilink + "User/UserController.php", {
-                                    type: 'user',
-                                    action: 'delete',
-                                    user: {
-                                        user_id: $sessionStorage.currentUser.user_id,
-                                        user_email: $sessionStorage.currentUser.user_email
-                                    }
-                                })
-
-                                .then(function (res) {
-                                        var response = res.data;
-                                        $scope.logout();
-
-
-                                    }, function () {
-                                        console.warn('ERROR DELETE PRODUCT');
-                                    }
-                                );
+                        text: 'Ok',
+                        type: 'button-positive',
+                        onTap: function(){
+                            $state.go($state.current);
                         }
                     }
                 ]
             });
         }
+    };
+
+    $scope.deleteUser = function () {
+        $ionicPopup.confirm({
+            title: 'Supprimer mon compte ?',
+            buttons: [
+                {
+                    text: 'Non',
+                    onTap: function () {
+                        $state.go($state.current, {}, {reload: true});
+                    }
+                },
+                {
+                    text: 'Oui',
+                    type: 'button-assertive',
+                    onTap: function () {
+                        $http.post($scope.apilink + "User/UserController.php", {
+                                type: 'user',
+                                action: 'delete',
+                                user: {
+                                    user_id: $sessionStorage.currentUser.user_id,
+                                    user_email: $sessionStorage.currentUser.user_email
+                                }
+                            })
+
+                            .then(function (res) {
+                                    var response = res.data;
+                                    $scope.logout();
+
+
+                                }, function () {
+                                    console.warn('ERROR DELETE PRODUCT');
+                                }
+                            );
+                    }
+                }
+            ]
+        });
+    }
     });

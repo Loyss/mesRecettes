@@ -1,0 +1,28 @@
+<ion-view cache-view="false" can-swipe-back="false">
+    <ion-nav-title>
+        {{ recette.recette_id }}
+    </ion-nav-title>
+    <ion-content>
+        <div class="list card">
+
+            <div class="item item-avatar">
+                <img src="../img/cookie.png">
+                <h2>{{recette.titre}}</h2>
+                <p>{{recette.date_recette}}</p>
+            </div>
+
+            <div class="item item-body">
+                <img class="full-image" src="../img/cookie.png">
+                <p>
+               {{recette.contenu}}
+                </p>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>
+
+
+
+
+
