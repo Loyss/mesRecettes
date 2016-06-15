@@ -1,10 +1,10 @@
 <ion-view cache-view="false">
 
     <ion-nav-title>
-        Nom{{recette.recette_name}}
+        Nom{{recette.recette_id}}
     </ion-nav-title>
 
-    <ion-content>
+    <ion-content class="padding">
         <div class="list card">
             <div class="item">
                 <h1>titre {{ recette.recette_name }}</h1>
@@ -16,7 +16,9 @@
                 <p>contenu {{ recette.recette_content }}</p>
             </div>
         </div>
+        <button class="button button-block button-assertive boutton-radius" type="button" ng-click="deleteRecette()">Supprimer la recette</button>
     </ion-content>
+
 
 </ion-view>
 

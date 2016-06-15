@@ -288,30 +288,67 @@ angular.module('starter.controllers', ['ngStorage'])
     /* RECETTE CONTROLLER */
     /*-------------------------------------------------------------------------------------------------------------------------------*/
 
-    .controller('RecetteController', function($scope, $state, $window, $http, $stateParams){
+    .controller('RecetteController', function($scope, $state, $window, $http, $stateParams, $ionicPopup){
         $scope.findRecette = function() {
-            if ($scope.logged == true) {
-                $http.post($scope.apilink+"Recette/RecetteController.php", {
-                        type : 'recette',
-                        action : 'find',
-                        recette: {
-                            recette_id : $stateParams['recetteId']
-                        }
-                    })
+            $http.post($scope.apilink+"Recette/RecetteController.php", {
+                    type : 'recette',
+                    action : 'find',
+                    recette: {
+                        recette_id : $stateParams['recetteId']
+                    }
+                })
 
-                    .then(function (res){
-                            var response = res.data;
-                            $scope.recette = response['recette'];
-                            console.log(res);
-                        },
-                        function(error){
-                            console.warn('ERROR FIND RECETTE');
-                            console.log(error);
-                        }
-                    );
-            }
+                .then(function (res){
+                        var response = res.data;
+                        $scope.recette = response['recette'];
+                        console.log(res);
+                    },
+                    function(error){
+                        console.warn('ERROR FIND RECETTE');
+                        console.log(error);
+                    }
+                );
         };
         $scope.findRecette();
+        console.log($scope.findRecette);
+
+        $scope.deleteRecette = function(recetteId, recetteName) {
+            $ionicPopup.confirm({
+                title: 'Êtes vous sûr de supprimer la recette <b>' + recetteName + '</b> ?',
+                buttons: [
+                    {
+                        text: 'Non',
+                        onTap: function () {
+                            $scope.findRecette();
+                        }
+                    },
+                    {
+                        text: 'Oui',
+                        type: 'button-assertive',
+                        onTap: function() {
+                            $http.post($scope.apilink+"Recette/RecetteController.php", {
+                                    type : 'recette',
+                                    action : 'delete',
+                                    recette: {
+                                        recette_id : recetteId
+                                    }
+                                })
+
+                                .then(function (res) {
+                                        $state.go("app.recettes");
+                                        $window.location.reload(true);
+                                    },
+                                    function(error){
+                                        console.warn('ERROR DELETE LIST');
+                                        console.log(error);
+                                    }
+                                );
+                        }
+                    }
+                ]
+            })
+        };
+
     })
 
     /*-------------------------------------------------------------------------------------------------------------------------------*/
