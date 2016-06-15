@@ -239,8 +239,6 @@ angular.module('starter.controllers', ['ngStorage'])
                 '<br>' +
                 '<input type="text" placeholder="Temps de preparation" ng-model="recetteData.recette_time">' +
                 '<br>' +
-                '<textarea placeholder="Ingrédiants" ng-model="recetteData.recette_ingr"></textarea>' +
-                '<br>' +
                 '<textarea placeholder="Recette" ng-model="recetteData.recette_content"></textarea>',
                 title: 'Ajouter une recette',
                 scope: $scope,
@@ -250,21 +248,19 @@ angular.module('starter.controllers', ['ngStorage'])
                         text: '<b>Ajouter</b>',
                         type: 'button-positive',
                         onTap: function(e) {
-                            if ($scope.recetteData.recette_name && $scope.recetteData.recette_time && $scope.recetteData.recette_ingr && $scope.recetteData.recette_content) {
+                            if ($scope.recetteData.recette_name && $scope.recetteData.recette_time && $scope.recetteData.recette_content) {
                                 $http.post($scope.apilink+"Recette/RecetteController.php", {
                                         type : 'recette',
                                         action : 'add',
                                         recette: {
                                             recette_name: $scope.recetteData.recette_name,
                                             recette_time: $scope.recetteData.recette_time,
-                                            recette_ingr: $scope.recetteData.recette_ingr,
                                             recette_content: $scope.recetteData.recette_content
                                         }
                                     })
                                     .then(function (res) {
                                             $scope.recetteData.recette_content = "";
                                             $scope.recetteData.recette_time = "";
-                                            $scope.recetteData.recette_ingr = "";
                                             $scope.recetteData.recette_name = "";
                                             $scope.findRecettes();
                                             //$state.go($state.current, {}, {reload: true});
