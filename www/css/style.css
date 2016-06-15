@@ -1,9 +1,37 @@
 /* Empty. Add your own CSS if you like */
+
+
+/*LOGIN*/
+
+.texte-white{
+    color: #ffffff;
+}
 .logo {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .logo img{
-    width: 50%;
+    width: 60%;
 }
+
+.pane .fond{
+    background-image: url("../img/background.jpg");
+}
+.pane .fond input{
+    color: #ffffff;
+}
+
+/*RECETTES*/
+
+/*.recettes{*/
+    /*height: 100px;*/
+    /*color: white;*/
+/*}*/
+/*.recettes h2{*/
+    /*color: #ffffff;*/
+/*}*/
+/*.recettes h3{*/
+    /*color: #ffffff;*/
+/*}*/
+

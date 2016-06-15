@@ -1,26 +1,25 @@
 <ion-view class="pane fond" view-title="Connexion">
     <ion-content ng-show="logged == false">
         <div class="logo text-center">
-            <img src="img/cookie.png" alt="">
-        </div>
-        <div class="title">
-            <h3 class="text-center texte-blanc">Miam !</h3>
+            <img src="img/logo.png" alt="La Machine à Miam">
         </div>
         <form ng-submit="login()">
             <div class="list">
                 <label class="item item-input item-floating-label">
-                    <span class="input-label texte-blanc">Email</span>
-                    <input class="texte-blanc" type="text" ng-model="userData.user_email" placeholder="Email">
+                    <span class="input-label texte-white">Email</span>
+                    <input class="texte-white" type="text" ng-model="userData.user_email" placeholder="Email">
                 </label>
                 <label class="item item-input item-floating-label">
-                    <span class="input-label texte-blanc">Password</span>
-                    <input class="texte-blanc" type="password" ng-model="userData.user_password"  placeholder="Password">
+                    <span class="input-label texte-white">Mot de Passe</span>
+                    <input class="texte-white" type="password" ng-model="userData.user_password"  placeholder="Mot de Passe">
                 </label>
                 <div class="padding">
-                    <button class="button button-block button-positive bleu-fonce boutton-radius" type="submit">Connexion</button>
-                    <p class="text-center texte-blanc">or</p>
-                    <button class="button button-block button-balanced vert boutton-radius" type="button" ng-click="viewRegister()">S'inscrire</button>
+                    <div class="row">
+                        <button class="button button-block button-positive bleu-fonce boutton-radius col " type="submit">Connexion</button>
+                        <button class="button button-block button-balanced vert boutton-radius col col-offset-10 " type="button" ng-click="viewRegister()">Inscription</button>
+                    </div>
                 </div>
+
             </div>
         </form>
     </ion-content>

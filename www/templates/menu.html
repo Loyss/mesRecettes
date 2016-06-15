@@ -14,14 +14,18 @@
 
     <ion-side-menu side="left">
 
-        <ion-header-bar class="bar-stable">
+        <ion-header-bar class="bar-assertive">
             <div ng-switch="logged">
-                <h1 ng-switch-when="true" class="title ">Salut {{ currentUser.user_pseudo }} !</h1>
-                <h1 ng-switch-when="false" class="title">HOSS</h1>
+                <h1 ng-switch-when="true" class="title ">Bonjour {{ currentUser.user_pseudo }} !</h1>
+                <h1 ng-switch-when="false" class="title">Menu</h1>
             </div>
         </ion-header-bar>
 
-        <ion-content>
+        <ion-content class="menu-bc">
+
+            <div class="logo text-center">
+                <img src="img/logo-dark.png" alt="La Machine à Miam">
+            </div>
 
             <ion-list>
                 <ion-item ng-show="logged == false" menu-close href="#/app/login">
